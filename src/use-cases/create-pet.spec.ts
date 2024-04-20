@@ -5,16 +5,18 @@ import { InMemoryOrganizationsRepository } from "@/repositories/in-memory/in-mem
 import { createOrganizationInMemory } from "@/utils/create-organization-in-memory";
 
 let petsRepository: InMemoryPetsRepository;
+let organizationsRepository: InMemoryOrganizationsRepository;
 let sut: CreatePetUseCase;
 
 describe("Register Use Case", () => {
   beforeEach(() => {
     petsRepository = new InMemoryPetsRepository();
-    sut = new CreatePetUseCase(petsRepository);
+    organizationsRepository = new InMemoryOrganizationsRepository();
+    sut = new CreatePetUseCase(petsRepository, organizationsRepository);
   });
 
   it("should be able to create pet", async () => {
-    const { organization } = await createOrganizationInMemory()
+    const { organization } = await createOrganizationInMemory(organizationsRepository)
 
     const { pet } = await sut.execute({
       name: "Princesa",

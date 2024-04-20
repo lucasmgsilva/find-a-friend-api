@@ -1,4 +1,4 @@
-import { Pet, Prisma } from "@prisma/client";
+import { Age, EnergyLevel, Environment, IndependenceLevel, Pet, Prisma, Size } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
 import { randomUUID } from "node:crypto";
 
@@ -23,5 +23,36 @@ export class InMemoryPetsRepository
     this.pets.push(pet);
 
     return pet;
+  }
+
+  async findById(id: string) {
+    const pet = this.pets.find((pet) => pet.id === id);
+
+    if (!pet) {
+      return null;
+    }
+
+    return pet;
+  }
+
+  async searchMany(
+    city: string,
+    state: string,
+    age: Age,
+    size: Size,
+    energy_level: EnergyLevel,
+    independence_level: IndependenceLevel,
+    environment: Environment,
+    page: number
+  ) {
+    const pets = this.pets.filter((pet) => {
+      return pet.age === age &&
+        pet.size === size &&
+        pet.energy_level === energy_level &&
+        pet.independence_level === independence_level &&
+        pet.environment === environment;
+    });
+
+    return pets.slice((page - 1) * 20, page * 20)
   }
 }

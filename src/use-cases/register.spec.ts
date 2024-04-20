@@ -17,8 +17,12 @@ describe("Register Use Case", () => {
     const { organization } = await sut.execute({
       responsible_name: "John Doe",
       email: "john@doe.com",
-      cep: "12346-321",
       address: "Groove Street",
+      number: "123",
+      neighborhood: "Santos",
+      cep: "12346-321",
+      city: "São Paulo",
+      state: "SP",
       whatsApp: "(11) 99999-9999",
       password: "123456",
     });
@@ -32,8 +36,12 @@ describe("Register Use Case", () => {
     const { organization } = await sut.execute({
       responsible_name: "John Doe",
       email: "john@doe.com",
-      cep: "12346-321",
       address: "Groove Street",
+      number: "123",
+      neighborhood: "Santos",
+      cep: "12346-321",
+      city: "São Paulo",
+      state: "SP",
       whatsApp: "(11) 99999-9999",
       password,
     });
@@ -52,8 +60,12 @@ describe("Register Use Case", () => {
     await sut.execute({
       responsible_name: "John Doe",
       email: email,
-      cep: "12346-321",
       address: "Groove Street",
+      number: "123",
+      neighborhood: "Santos",
+      cep: "12346-321",
+      city: "São Paulo",
+      state: "SP",
       whatsApp: "(11) 99999-9999",
       password: "123456",
     });
@@ -62,8 +74,12 @@ describe("Register Use Case", () => {
       sut.execute({
         responsible_name: "John Doe",
         email: email,
-        cep: "12346-321",
         address: "Groove Street",
+        number: "123",
+        neighborhood: "Santos",
+        cep: "12346-321",
+        city: "São Paulo",
+        state: "SP",
         whatsApp: "(11) 99999-9999",
         password: "123456",
       })

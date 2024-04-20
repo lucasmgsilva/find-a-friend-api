@@ -6,8 +6,12 @@ import { Organization } from "@prisma/client";
 interface RegisterUseCaseRequest {
   responsible_name: string;
   email: string;
-  cep: string;
   address: string;
+  number: string;
+  neighborhood: string;
+  cep: string;
+  city: string;
+  state: string;
   whatsApp: string;
   password: string;
 }
@@ -22,8 +26,12 @@ export class RegisterUseCase {
   async execute({
     responsible_name,
     email,
-    cep,
     address,
+    number,
+    neighborhood,
+    cep,
+    city,
+    state,
     whatsApp,
     password,
   }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
@@ -40,8 +48,12 @@ export class RegisterUseCase {
     const organization = await this.organizationsRepository.create({
       responsible_name,
       email,
-      cep,
       address,
+      number,
+      neighborhood,
+      cep,
+      city,
+      state,
       whatsApp,
       password_hash,
     });

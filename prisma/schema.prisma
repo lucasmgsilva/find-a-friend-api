@@ -41,37 +41,17 @@ enum Environment {
   LARGE
 }
 
-model Photo {
-  id        String @id @default(uuid())
-  pet       Pet    @relation(fields: [pet_id], references: [id])
-  pet_id    String
-  photo_url String
-
-  @@map("photos")
-}
-
-model AdoptionRequirement {
-  id          String @id @default(uuid())
-  pet         Pet    @relation(fields: [pet_id], references: [id])
-  pet_id      String
-  requirement String
-
-  @@map("adoption_requirements")
-}
-
 model Pet {
-  id                    String                @id @default(uuid())
-  name                  String
-  about                 String?
-  age                   Age
-  size                  Size
-  energy_level          EnergyLevel
-  independence_level    IndependenceLevel
-  environment           Environment
-  photos                Photo[]
-  adoption_requirements AdoptionRequirement[]
-  organization          Organization          @relation(fields: [organization_id], references: [id])
-  organization_id       String
+  id                 String            @id @default(uuid())
+  name               String
+  about              String?
+  age                Age
+  size               Size
+  energy_level       EnergyLevel
+  independence_level IndependenceLevel
+  environment        Environment
+  organization       Organization      @relation(fields: [organization_id], references: [id])
+  organization_id    String
 
   @@map("pets")
 }
@@ -80,11 +60,17 @@ model Organization {
   id               String @id @default(uuid())
   responsible_name String
   email            String @unique
-  cep              String @db.Char(9)
-  address          String
-  whatsApp         String @db.Char(15)
-  password_hash    String
-  pets             Pet[]
+
+  address      String
+  number       String
+  neighborhood String
+  cep          String @db.Char(9)
+  city         String
+  state        String @db.Char(2)
+
+  whatsApp      String @db.Char(15)
+  password_hash String
+  pets          Pet[]
 
   @@map("organizations")
 }

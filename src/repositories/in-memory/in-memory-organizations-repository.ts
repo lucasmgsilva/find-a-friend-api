@@ -12,8 +12,12 @@ export class InMemoryOrganizationsRepository
       id: randomUUID(),
       responsible_name: data.responsible_name,
       email: data.email,
-      cep: data.cep,
       address: data.address,
+      number: data.number,
+      neighborhood: data.neighborhood,
+      cep: data.cep,
+      city: data.city,
+      state: data.state,
       whatsApp: data.whatsApp,
       password_hash: data.password_hash,
     };

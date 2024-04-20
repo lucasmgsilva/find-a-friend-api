@@ -2,9 +2,7 @@ import { InMemoryOrganizationsRepository } from "@/repositories/in-memory/in-mem
 import { OrganizationsRepository } from "@/repositories/organizations-repository";
 import { RegisterUseCase } from "@/use-cases/register";
 
-export async function createOrganizationInMemory() {
-    let organizationsRepository: OrganizationsRepository = new InMemoryOrganizationsRepository();
-
+export async function createOrganizationInMemory(organizationsRepository: OrganizationsRepository) {
     let sut: RegisterUseCase = new RegisterUseCase(organizationsRepository);
 
     const { organization } = await sut.execute({

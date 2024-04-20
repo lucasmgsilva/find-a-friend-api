@@ -3,6 +3,7 @@ import { UserAlreadyExistsError } from "./errors/user-already-exists-error";
 import { hash } from "bcrypt";
 import { $Enums, Organization, Pet } from "@prisma/client";
 import { PetsRepository } from "@/repositories/pets-repository";
+import { OrganizationNotFoundError } from "./errors/organization-not-found-error";
 
 interface CreatePetUseCaseRequest {
   name: string,
@@ -20,7 +21,7 @@ interface CreatePetUseCaseResponse {
 }
 
 export class CreatePetUseCase {
-  constructor(private petsRepository: PetsRepository) {}
+  constructor(private petsRepository: PetsRepository, private organizationsRepository: OrganizationsRepository) {}
 
   async execute({
     name,
@@ -32,6 +33,12 @@ export class CreatePetUseCase {
     environment,
     organization_id,
   }: CreatePetUseCaseRequest): Promise<CreatePetUseCaseResponse> {
+    const organization = await this.organizationsRepository.findById(organization_id);
+
+    if (!organization) {
+      throw new OrganizationNotFoundError()
+    }
+
     const pet = await this.petsRepository.create({
       name,
       about,
