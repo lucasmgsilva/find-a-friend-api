@@ -1,14 +1,13 @@
 import { InMemoryOrganizationsRepository } from "@/repositories/in-memory/in-memory-organizations-repository";
 import { AuthenticateUseCase } from "./authenticate";
 import { beforeEach, describe, expect, it } from "vitest";
-import { UserAlreadyExistsError } from "./errors/user-already-exists-error";
-import { compare, hash } from "bcrypt";
+import { hash } from "bcrypt";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 
 let organizationsRepository: InMemoryOrganizationsRepository;
 let sut: AuthenticateUseCase;
 
-describe("Register Use Case", () => {
+describe("Authenticate Use Case", () => {
   beforeEach(() => {
     organizationsRepository = new InMemoryOrganizationsRepository();
     sut = new AuthenticateUseCase(organizationsRepository);
@@ -18,8 +17,12 @@ describe("Register Use Case", () => {
     await organizationsRepository.create({
       responsible_name: "John Doe",
       email: "john@doe.com",
-      cep: "12346-321",
       address: "Groove Street",
+      number: "123",
+      neighborhood: "Santos",
+      cep: "12345-321",
+      city: "São Paulo",
+      state: "SP",
       whatsApp: "(11) 99999-9999",
       password_hash: await hash("123456", 6),
     })
@@ -36,8 +39,12 @@ describe("Register Use Case", () => {
     await organizationsRepository.create({
       responsible_name: "John Doe",
       email: "john@doe.com",
-      cep: "12346-321",
       address: "Groove Street",
+      number: "123",
+      neighborhood: "Santos",
+      cep: "12345-321",
+      city: "São Paulo",
+      state: "SP",
       whatsApp: "(11) 99999-9999",
       password_hash: await hash("123456", 6),
     })
@@ -48,19 +55,23 @@ describe("Register Use Case", () => {
     })).rejects.toBeInstanceOf(InvalidCredentialsError);
   })
 
-  it('should not be able to authenticate with wrong email', async () => {
+  it('should not be able to authenticate with wrong password', async () => {
     await organizationsRepository.create({
       responsible_name: "John Doe",
       email: "john@doe.com",
-      cep: "12346-321",
       address: "Groove Street",
+      number: "123",
+      neighborhood: "Santos",
+      cep: "12345-321",
+      city: "São Paulo",
+      state: "SP",
       whatsApp: "(11) 99999-9999",
       password_hash: await hash("123456", 6),
     })
 
     await expect(sut.execute({
       email: "john@doe.com",
-      password: "123123",
+      password: "wrong-password",
     })).rejects.toBeInstanceOf(InvalidCredentialsError);
   })
 });

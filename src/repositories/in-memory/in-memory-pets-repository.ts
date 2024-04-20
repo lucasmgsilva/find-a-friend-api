@@ -45,14 +45,30 @@ export class InMemoryPetsRepository
     environment: Environment,
     page: number
   ) {
-    const pets = this.pets.filter((pet) => {
-      return pet.age === age &&
-        pet.size === size &&
-        pet.energy_level === energy_level &&
-        pet.independence_level === independence_level &&
-        pet.environment === environment;
+    const filteredPets = this.pets.filter((pet) => {
+      if (age && pet.age !== age) {
+        return false;
+      }
+
+      if (size && pet.size !== size) {
+        return false;
+      }
+
+      if (energy_level && pet.energy_level !== energy_level) {
+        return false;
+      }
+
+      if (independence_level && pet.independence_level !== independence_level) {
+        return false;
+      }
+
+      if (environment && pet.environment !== environment) {
+        return false;
+      }
+
+      return true;
     });
 
-    return pets.slice((page - 1) * 20, page * 20)
+    return filteredPets.slice((page - 1) * 20, page * 20)
   }
 }

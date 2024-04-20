@@ -20,7 +20,7 @@ describe("Register Use Case", () => {
       address: "Groove Street",
       number: "123",
       neighborhood: "Santos",
-      cep: "12346-321",
+      cep: "12345-321",
       city: "São Paulo",
       state: "SP",
       whatsApp: "(11) 99999-9999",

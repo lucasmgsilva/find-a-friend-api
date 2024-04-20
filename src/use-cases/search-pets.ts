@@ -30,8 +30,8 @@ export class SearchPetsUseCase {
             environment,
             page
         }: SearchPetsUseCaseRequest
-    ) {
-        return await this.petsRepository.searchMany(
+    ): Promise<SearchPetsUseCaseResponse> {
+        const pets = await this.petsRepository.searchMany(
             city,
             state,
             age,
@@ -41,5 +41,7 @@ export class SearchPetsUseCase {
             environment,
             page
         );
+
+        return { pets };
     }
 }
