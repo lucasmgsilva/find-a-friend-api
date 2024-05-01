@@ -20,7 +20,7 @@ export async function search(request: FastifyRequest, reply: FastifyReply) {
     try {
         const searchPetsUseCase = makeSearchPetsUseCase();
 
-        const pets = await searchPetsUseCase.execute({
+        const { pets } = await searchPetsUseCase.execute({
             city,
             state,
             age,
